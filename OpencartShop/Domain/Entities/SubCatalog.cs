@@ -10,5 +10,7 @@ namespace OpencartShop.Domain.Entities
 
         [ForeignKey(nameof(ParentCatalog))]
         public Catalog? Catalog { get; set; }
+
+        public List<Category>? Categories { get; set; }
     }
 }

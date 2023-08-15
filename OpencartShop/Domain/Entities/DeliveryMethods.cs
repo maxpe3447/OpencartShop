@@ -1,10 +1,9 @@
 ﻿namespace OpencartShop.Domain.Entities
 {
-    public class Catalog : IEntity
+    public class DeliveryMethods : IEntity
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
-
-        public List<SubCatalog>? SubCatalog { get; set; }
+        public string Description { get; set; } = null!;
     }
 }

@@ -13,6 +13,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//On time created new cart by anonymous customer, need to get id (this cart) and 
+//put on cookie (ex: cart:<id>)
+//Next time need to check cookie for availability it cart
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
