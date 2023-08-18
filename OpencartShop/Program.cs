@@ -1,12 +1,23 @@
-using OpencartShop.Service.Repository;
+using Microsoft.EntityFrameworkCore;
+using OpencartShop.Domain;
+using OpencartShop.Helpers;
+using OpencartShop.Service.Repository.Catalog;
+using OpencartShop.Service.Repository.Catalog.CatalogService;
+using OpencartShop.Service.Repository.Catalog.CategoryService;
+using OpencartShop.Service.Repository.Catalog.SubCatalogServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.Bind("Project", new Config());
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IRepository, Repository>();
+builder.Services.AddDbContext<AppDBContext>(b=>b.UseSqlite(Config.ConnectionString));
 
-
+builder.Services.AddTransient<ICatalogManager, CatalogManager>();
+builder.Services.AddTransient<ICatalogService, CatalogService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ISubCatalogService, SubCatalogService>();
 
 var app = builder.Build();
 

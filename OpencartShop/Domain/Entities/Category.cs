@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int SubcategoryId { get; set; }
-        public SubCatalog? Subcatalog { get; set; }
+        public string Title { get; set; } = null!;
+        public SubCatalog? SubCatalogs { get; set; }
     }
 }
