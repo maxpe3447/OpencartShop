@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OpencartShop.Domain.Entities;
+using System;
 
 namespace OpencartShop.Domain
 {
@@ -25,7 +26,8 @@ namespace OpencartShop.Domain
         public DbSet<ReturnProducts> ReturnProducts{ get; set; } = null!;
         public DbSet<CustomerReviews> CustomerReviews{ get; set; } = null!;
         
-        public AppDBContext()
+        public AppDBContext(DbContextOptions<AppDBContext> options)
+            : base(options)
         {
             Database.EnsureDeleted();
             Database.EnsureCreatedAsync();
@@ -34,7 +36,6 @@ namespace OpencartShop.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlite("Data Source=db.db");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

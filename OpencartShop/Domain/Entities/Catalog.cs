@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string Title { get; set; } = null!;
 
-        public List<SubCatalog>? SubCatalog { get; set; }
+        public List<SubCatalog>? SubCatalogs { get; set; }
     }
 }
