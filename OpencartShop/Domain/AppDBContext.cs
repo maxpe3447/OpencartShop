@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OpencartShop.Domain.Entities;
+using OpencartShop.Helpers;
 using System;
 
 namespace OpencartShop.Domain
@@ -29,7 +31,7 @@ namespace OpencartShop.Domain
         public AppDBContext(DbContextOptions<AppDBContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreatedAsync();
         }
 
@@ -44,6 +46,25 @@ namespace OpencartShop.Domain
             modelBuilder.Entity<CustomerReviews>()
                         .ToTable(c=>c.HasCheckConstraint(STAR_COUNT, $"{STAR_COUNT} > 0 AND {STAR_COUNT} <= 5"));
             //modelBuilder.Entity<Users>().Property(u => u.IsAdmin).HasDefaultValue(false);
+
+
+            modelBuilder.Entity<Customers>().HasData(new Customers
+            {
+                Id = 1,
+                FirstName = "Admin",
+                LastName = "Admin",
+                Phone = "+38(...)...-..-..",
+                Email = "mail@gmail.com"
+            });
+            modelBuilder.Entity<Users>().HasData(new Users
+            {
+                Id = 1,
+                CustomersId = 1,
+                IsAdmin = true,
+                PasswordHash = AuthConfigs.GetAdminPasswordHash()
+            });
+            Console.WriteLine("1 ->"+AuthConfigs.GetAdminPasswordHash());
+            Console.WriteLine("2 ->"+ AuthConfigs.GetAdminPasswordHash());
         }
     }
 }

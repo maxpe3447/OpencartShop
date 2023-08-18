@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OpencartShop.Domain.Entities;
 using OpencartShop.Service.Repository.Catalog;
 using System.Linq.Expressions;
@@ -17,7 +18,7 @@ namespace OpencartShop.Controllers
             _catalogManager = catalogManager;
         }
         #region GET
-
+        [Authorize]
         [Route("[action]")]
         [HttpGet]
         public IQueryable<Catalog> Catalogs()
@@ -61,8 +62,9 @@ namespace OpencartShop.Controllers
         #endregion
         #region POST /[action]?title=<title>
         // POST <CatalogController>
-        [Route("[action]")]
-        [HttpPost]
+        [AllowAnonymous]
+        //[Route()]
+        [HttpPost("[action]")]
         public IResult AddCatalog(string title)
         {
             try
