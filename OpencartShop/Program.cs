@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OpencartShop.Domain;
 using OpencartShop.Helpers;
 using OpencartShop.Service.Repository.Auth.LoginService;
+using OpencartShop.Service.Repository.Auth.RegistrationService;
 using OpencartShop.Service.Repository.Catalog;
 using OpencartShop.Service.Repository.Catalog.CatalogService;
 using OpencartShop.Service.Repository.Catalog.CategoryService;
@@ -39,6 +40,7 @@ builder.Services.AddTransient<ICatalogService, CatalogService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ISubCatalogService, SubCatalogService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
+builder.Services.AddTransient<IRegistrationService, RegistrationService>();
 
 var app = builder.Build();
 

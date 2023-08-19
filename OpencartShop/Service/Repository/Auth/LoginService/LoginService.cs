@@ -36,7 +36,7 @@ namespace OpencartShop.Service.Repository.Auth.LoginService
                 issuer: AuthConfigs.ISSUER,
                 audience: AuthConfigs.AUDIENCE,
                 claims: claims,
-                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+                expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                 signingCredentials: new SigningCredentials(AuthConfigs.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodeJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 

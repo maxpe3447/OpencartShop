@@ -10,7 +10,7 @@ namespace OpencartShop.Helpers
 {
     public class AuthConfigs
     {
-        private static PasswordHasher<Users> _passwordHasher = new();
+        private static PasswordHasher<User> _passwordHasher = new();
         public static string? AdminPassword { get; set; }
         public static string? ISSUER { get; set; }
         public static string? AUDIENCE { get; set; }

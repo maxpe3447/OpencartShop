@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using OpencartShop.Domain.Entities;
 using OpencartShop.Model;
 using OpencartShop.Service.Repository.Auth.LoginService;
+using OpencartShop.Service.Repository.Auth.RegistrationService;
+using System.Reflection.Metadata.Ecma335;
 
 namespace OpencartShop.Controllers
 {
@@ -11,9 +13,12 @@ namespace OpencartShop.Controllers
     public class AccountController : ControllerBase
     {
         private readonly ILoginService _loginService;
-        public AccountController(ILoginService loginService)
+        private readonly IRegistrationService _registrationService;
+        public AccountController(ILoginService loginService,
+                                 IRegistrationService registrationService)
         {
             _loginService = loginService;
+            _registrationService = registrationService;
         }
         [AllowAnonymous]
         [HttpPost("[action]")]
@@ -26,5 +31,22 @@ namespace OpencartShop.Controllers
             }
             return Results.Text(token);
         }
+
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public IResult Registration([FromBody] RegistrationUserModel user)
+        {
+            try
+            {
+                var userId = _registrationService.Registration(user);
+                return Results.Json(new {UserId=userId});
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+            
+        }
+
     }
 }
