@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using OpencartShop.Domain.Entities;
+using OpencartShop.Helpers;
 using System;
 
 namespace OpencartShop.Domain
@@ -10,26 +12,26 @@ namespace OpencartShop.Domain
         public DbSet<Catalog> Catalog { get; set; } = null!;
         public DbSet<SubCatalog> SubCatalog { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<Products> Products { get; set; } = null!;
-        public DbSet<ProductColors> ProductColors { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ProductColor> ProductColors { get; set; } = null!;
         public DbSet<ProductSizes> ProductSizes { get; set; } = null!;
-        public DbSet<DeliveryMethods> DeliveryMethods { get; set; } = null!;
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = null!;
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
-        public DbSet<Customers> Customers { get; set; } = null!;
-        public DbSet<Users> Users { get; set; } = null!;
-        public DbSet<Addresses> Addresses { get; set; } = null!;
-        public DbSet<FavoriteProducts> LikeProducts { get; set; } = null!;
-        public DbSet<Carts> Carts { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Address> Addresses { get; set; } = null!;
+        public DbSet<FavoriteProduct> LikeProducts { get; set; } = null!;
+        public DbSet<Cart> Carts { get; set; } = null!;
         public DbSet<CartItem> CartItems { get; set; } = null!;
-        public DbSet<Orders> Orders { get; set; } = null!;
-        public DbSet<OrderItems> OrderItems { get; set; } = null!;
-        public DbSet<ReturnProducts> ReturnProducts{ get; set; } = null!;
-        public DbSet<CustomerReviews> CustomerReviews{ get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
+        public DbSet<ReturnProduct> ReturnProducts{ get; set; } = null!;
+        public DbSet<CustomerReview> CustomerReviews{ get; set; } = null!;
         
         public AppDBContext(DbContextOptions<AppDBContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreatedAsync();
         }
 
@@ -40,10 +42,29 @@ namespace OpencartShop.Domain
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            const string STAR_COUNT = nameof(Entities.CustomerReviews.StarCount);
-            modelBuilder.Entity<CustomerReviews>()
+            const string STAR_COUNT = nameof(Entities.CustomerReview.StarCount);
+            modelBuilder.Entity<CustomerReview>()
                         .ToTable(c=>c.HasCheckConstraint(STAR_COUNT, $"{STAR_COUNT} > 0 AND {STAR_COUNT} <= 5"));
             //modelBuilder.Entity<Users>().Property(u => u.IsAdmin).HasDefaultValue(false);
+
+
+            modelBuilder.Entity<Customer>().HasData(new Customer
+            {
+                Id = 1,
+                FirstName = "Admin",
+                LastName = "Admin",
+                Phone = "+38(...)...-..-..",
+                Email = "mail@gmail.com"
+            });
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                CustomersId = 1,
+                IsAdmin = true,
+                PasswordHash = AuthConfigs.GetAdminPasswordHash()
+            });
+            Console.WriteLine("1 ->"+AuthConfigs.GetAdminPasswordHash());
+            Console.WriteLine("2 ->"+ AuthConfigs.GetAdminPasswordHash());
         }
     }
 }

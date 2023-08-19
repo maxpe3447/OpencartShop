@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OpencartShop.Domain.Entities;
 using OpencartShop.Service.Repository.Catalog;
 using System.Linq.Expressions;
@@ -17,21 +18,20 @@ namespace OpencartShop.Controllers
             _catalogManager = catalogManager;
         }
         #region GET
-
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public IQueryable<Catalog> Catalogs()
         {
             return _catalogManager.GetAll<Catalog>();
         }
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public IQueryable<Category> Categories()
         {
             return _catalogManager.GetAll<Category>();
         }
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public IQueryable<SubCatalog> SubCatalogs()
         {
             return _catalogManager.GetAll<SubCatalog>();
@@ -39,20 +39,20 @@ namespace OpencartShop.Controllers
         #endregion
         #region Get?id={...}
         // GET /<CatalogController>/catalog?id=5
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public Catalog GetCatalog(int id)
         {
             return _catalogManager.GetById<Catalog>(id) as Catalog ?? new Catalog();
         }
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public Category GetCategory(int id)
         {
             return _catalogManager.GetById<Category>(id) as Category ?? new Category();
         }
-        [Route("[action]")]
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public SubCatalog GetSubCatalog(int id)
         {
             return _catalogManager.GetById<SubCatalog>(id) as SubCatalog ?? new SubCatalog();
@@ -61,8 +61,8 @@ namespace OpencartShop.Controllers
         #endregion
         #region POST /[action]?title=<title>
         // POST <CatalogController>
-        [Route("[action]")]
-        [HttpPost]
+        [Authorize]
+        [HttpPost("[action]")]
         public IResult AddCatalog(string title)
         {
             try
@@ -76,6 +76,8 @@ namespace OpencartShop.Controllers
 
             return Results.Ok();
         }
+        [Authorize]
+        [HttpPost("[action]")]
         public IResult AddCategory(string title)
         {
             try
@@ -89,6 +91,8 @@ namespace OpencartShop.Controllers
 
             return Results.Ok();
         }
+        [Authorize]
+        [HttpPost("[action]")]
         public IResult AddSubCatalog(string title)
         {
             try
@@ -105,6 +109,7 @@ namespace OpencartShop.Controllers
         #endregion
         #region PUT /[action]/{id}?title=<newTitle>
         // PUT api/<CatalogController>/5?title=<newTitle>
+        [Authorize]
         [HttpPut("[action]/{id}")]
         public IResult EditCatalog(int id, string title)
         {
@@ -118,7 +123,7 @@ namespace OpencartShop.Controllers
             }
             return Results.Ok();
         }
-        // PUT api/<CatalogController>/5?title=<newTitle>
+        [Authorize]
         [HttpPut("[action]/{id}")]
         public IResult EditCategory(int id, string title)
         {
@@ -132,7 +137,7 @@ namespace OpencartShop.Controllers
             }
             return Results.Ok();
         }
-        // PUT api/<CatalogController>/5?title=<newTitle>
+        [Authorize]
         [HttpPut("[action]/{id}")]
         public IResult EditSubCatalog(int id, string title)
         {
@@ -149,6 +154,7 @@ namespace OpencartShop.Controllers
         #endregion
         #region DELETE /[action]/{id}
         // DELETE api/<CatalogController>/5
+        [Authorize]
         [HttpDelete("[action]/{id}")]
         public IResult DeleteCatalog(int id)
         {
@@ -162,6 +168,7 @@ namespace OpencartShop.Controllers
             }
             return Results.Ok();
         }
+        [Authorize]
         [HttpDelete("[action]/{id}")]
         public IResult DeleteCategory(int id)
         {
@@ -175,6 +182,7 @@ namespace OpencartShop.Controllers
             }
             return Results.Ok();
         }
+        [Authorize]
         [HttpDelete("[action]/{id}")]
         public IResult DeleteSubCatalog(int id)
         {
