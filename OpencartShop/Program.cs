@@ -8,6 +8,7 @@ using OpencartShop.Service.Repository.Catalog;
 using OpencartShop.Service.Repository.Catalog.CatalogService;
 using OpencartShop.Service.Repository.Catalog.CategoryService;
 using OpencartShop.Service.Repository.Catalog.SubCatalogServices;
+using OpencartShop.Service.Repository.Products.ProductColors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ISubCatalogService, SubCatalogService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IRegistrationService, RegistrationService>();
+builder.Services.AddTransient<IProductColorsService, ProductColorsService>();
 
 var app = builder.Build();
 
