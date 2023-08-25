@@ -8,13 +8,13 @@ namespace OpencartShop.Domain
 {
     public class AppDBContext : DbContext
     {
-        public DbSet<Colors> Colors { get; set; } = null!;
+        public DbSet<Color> Colors { get; set; } = null!;
         public DbSet<Catalog> Catalog { get; set; } = null!;
         public DbSet<SubCatalog> SubCatalog { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<ProductColor> ProductColors { get; set; } = null!;
-        public DbSet<ProductSizes> ProductSizes { get; set; } = null!;
+        public DbSet<ProductSize> ProductSizes { get; set; } = null!;
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; } = null!;
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
@@ -31,7 +31,7 @@ namespace OpencartShop.Domain
         public AppDBContext(DbContextOptions<AppDBContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
+            //Database.EnsureDeletedAsync();
             Database.EnsureCreatedAsync();
         }
 
@@ -63,8 +63,25 @@ namespace OpencartShop.Domain
                 IsAdmin = true,
                 PasswordHash = AuthConfigs.GetAdminPasswordHash()
             });
-            Console.WriteLine("1 ->"+AuthConfigs.GetAdminPasswordHash());
-            Console.WriteLine("2 ->"+ AuthConfigs.GetAdminPasswordHash());
+
+            modelBuilder.Entity<Catalog>().HasData(new Catalog
+            {
+                Id = 1,
+                Title = "Test"
+            });
+            modelBuilder.Entity<SubCatalog>().HasData(new SubCatalog
+            {
+                Id = 1,
+                Title = "Test",
+                ParentCatalog = 1
+            }) ;
+            modelBuilder.Entity<Category>().HasData(new Category
+            {
+                Id = 1,
+                Title = "Test",
+                SubcategoryId = 1
+            });
+
         }
     }
 }

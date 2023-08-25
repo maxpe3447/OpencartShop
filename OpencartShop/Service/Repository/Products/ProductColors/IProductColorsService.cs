@@ -4,10 +4,10 @@ namespace OpencartShop.Service.Repository.Products.ProductColors
 {
     public interface IProductColorsService
     {
-        IQueryable<Colors> GetAllColors();
-        void AddColors(Colors color);
-        void EditColors(Colors color);
-        Colors? GetColorById(int id);
+        IQueryable<Color> GetAllColors();
+        void AddColors(Color color);
+        void EditColors(Color color);
+        Color? GetColorById(int id);
 
         void DeleteColorById(int id);
     }

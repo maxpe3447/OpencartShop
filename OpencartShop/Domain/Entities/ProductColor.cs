@@ -4,10 +4,10 @@
     {
         public int Id { get; set; }
         public int ColorsId { get; set; }
-        public Colors? Color { get; set; }
+        public Color? Color { get; set; }
 
-        public int ProductsId { get; set; }
-        public Product? Products { get; set; }
+        public int ProductId { get; set; }
+        public Product? Product { get; set; }
 
     }
 }

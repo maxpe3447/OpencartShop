@@ -1,6 +1,6 @@
 ﻿namespace OpencartShop.Domain.Entities
 {
-    public class ProductSizes : IEntity
+    public class ProductSize : IEntity
     {
         public int Id { get; set; }
         public int ProductsId { get; set; }

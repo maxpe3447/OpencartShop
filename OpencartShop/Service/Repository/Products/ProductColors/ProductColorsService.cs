@@ -11,28 +11,31 @@ namespace OpencartShop.Service.Repository.Products.ProductColors
         {
             _dbContext = appDBContext;
         }
-        public void AddColors(Colors color) => SaveColor(color);
+        public void AddColors(Color color) => SaveColor(color);
 
         public void DeleteColorById(int id) 
-            => _dbContext.Colors.Remove(new Colors { Id = id });
+            => _dbContext.Colors.Remove(new Color { Id = id });
 
-        public void EditColors(Colors color) => SaveColor(color);
+        public void EditColors(Color color) => SaveColor(color);
 
-        public IQueryable<Colors> GetAllColors() => _dbContext.Colors;
+        public IQueryable<Color> GetAllColors() => _dbContext.Colors;
 
-        public Colors? GetColorById(int id) => 
+        public Color? GetColorById(int id) => 
             _dbContext.Colors.FirstOrDefault(c => c.Id == id);
 
 
-        private void SaveColor(Colors color)
+        private void SaveColor(Color color)
         {
             if (color.Id == default)
             {
                 _dbContext.Entry(color).State = EntityState.Added;
-                return;
+            }
+            else
+            {
+                _dbContext.Entry(color).State = EntityState.Modified;
             }
 
-            _dbContext.Entry(color).State = EntityState.Modified;
+            _dbContext.SaveChangesAsync();
         }
     }
 }

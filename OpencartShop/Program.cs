@@ -9,6 +9,8 @@ using OpencartShop.Service.Repository.Catalog.CatalogService;
 using OpencartShop.Service.Repository.Catalog.CategoryService;
 using OpencartShop.Service.Repository.Catalog.SubCatalogServices;
 using OpencartShop.Service.Repository.Products.ProductColors;
+using OpencartShop.Service.Repository.Products.ProductService;
+using OpencartShop.Service.Repository.Products.ProductSizes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +45,8 @@ builder.Services.AddTransient<ISubCatalogService, SubCatalogService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IRegistrationService, RegistrationService>();
 builder.Services.AddTransient<IProductColorsService, ProductColorsService>();
-
+builder.Services.AddTransient<IProductSizesService, ProductSizesService>();
+builder.Services.AddTransient<IProductService , ProductService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,5 +13,8 @@
         public int Count { get; set; }
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
+        public List<ProductSize> ProductSizes { get; set; } = new();
+        public List<ProductColor> ProductColors { get; set; } = new();
+        public List<CustomerReview> CustomerReviews { get; set; } = new();
     }
 }
