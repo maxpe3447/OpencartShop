@@ -80,6 +80,13 @@ namespace OpencartShop.Controllers
             _productService.AddProduct(product);
             return Results.Ok();
         }
+        [Authorize]
+        [HttpPost("[action]")]
+        public IResult BindColor([FromBody] ProductColor productColor)
+        {
+            _productColorsService.Bind(productColor.ColorsId, productColor.ProductId);
+            return Results.Ok();
+        }
         #endregion
         #region PUT
         [Authorize]
@@ -124,6 +131,13 @@ namespace OpencartShop.Controllers
         public IResult DeleteProduct(int id)
         {
             _productService.DeleteProductById(id);
+            return Results.Ok();
+        }
+        [Authorize]
+        [HttpDelete("[action]/{id}")]
+        public IResult DeleteBindColor(int id)
+        {
+            _productColorsService.RemoveBind(id);
             return Results.Ok();
         }
         #endregion

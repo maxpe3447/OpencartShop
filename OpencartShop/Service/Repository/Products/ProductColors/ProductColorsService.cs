@@ -13,6 +13,11 @@ namespace OpencartShop.Service.Repository.Products.ProductColors
         }
         public void AddColors(Color color) => SaveColor(color);
 
+        public void Bind(int colorId, int productId)
+        {
+            _dbContext.ProductColors.Add(new ProductColor { ColorsId = colorId, ProductId = productId});
+        }
+
         public void DeleteColorById(int id) 
             => _dbContext.Colors.Remove(new Color { Id = id });
 
@@ -23,6 +28,10 @@ namespace OpencartShop.Service.Repository.Products.ProductColors
         public Color? GetColorById(int id) => 
             _dbContext.Colors.FirstOrDefault(c => c.Id == id);
 
+        public void RemoveBind(int id)
+        {
+            _dbContext.ProductColors.Remove(new ProductColor { Id = id });
+        }
 
         private void SaveColor(Color color)
         {
