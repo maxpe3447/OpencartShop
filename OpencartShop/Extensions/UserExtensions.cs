@@ -1,7 +1,8 @@
 ﻿using OpencartShop.Domain.Entities;
+using OpencartShop.Helpers;
 using OpencartShop.Model;
 
-namespace OpencartShop.Helpers
+namespace OpencartShop.Extensions
 {
     public static class UserExtensions
     {
