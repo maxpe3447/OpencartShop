@@ -1,5 +1,5 @@
 ﻿using OpencartShop.Domain;
-using OpencartShop.Helpers;
+using OpencartShop.Extensions;
 using OpencartShop.Model;
 
 namespace OpencartShop.Service.Repository.Auth.RegistrationService
