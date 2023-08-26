@@ -20,6 +20,7 @@ namespace OpencartShop.Domain.Entities
         [Required]
         public string? PhoneOrEmail { get; set; }
         public bool IsOpen { get; set; }
+        public bool IsActive { get; set; } = true;
         [Required]
         public string? Reason { get; set; }
         public int? CustomersId { get; set; }

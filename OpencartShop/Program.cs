@@ -13,6 +13,7 @@ using OpencartShop.Service.Repository.Products.ProductService;
 using OpencartShop.Service.Repository.Products.ProductSizes;
 using OpencartShop.Controllers;
 using OpencartShop.Service.Repository.OrderService;
+using OpencartShop.Service.Repository.ReturnProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,7 @@ builder.Services.AddTransient<IProductColorsService, ProductColorsService>();
 builder.Services.AddTransient<IProductSizesService, ProductSizesService>();
 builder.Services.AddTransient<IProductService , ProductService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddTransient<IReturnProductService, ReturnProductService>();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
