@@ -14,6 +14,7 @@ using OpencartShop.Service.Repository.Products.ProductSizes;
 using OpencartShop.Controllers;
 using OpencartShop.Service.Repository.OrderService;
 using OpencartShop.Service.Repository.ReturnProductService;
+using OpencartShop.Service.UserDataService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDBContext>(b=>b.UseSqlite(Config.ConnectionString));
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddTransient<ICatalogManager, CatalogManager>();
 builder.Services.AddTransient<ICatalogService, CatalogService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
@@ -52,6 +55,7 @@ builder.Services.AddTransient<IProductSizesService, ProductSizesService>();
 builder.Services.AddTransient<IProductService , ProductService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IReturnProductService, ReturnProductService>();
+builder.Services.AddTransient<IUserDataService, UserDataService>();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

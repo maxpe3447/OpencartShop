@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpencartShop.Domain.Entities;
 using OpencartShop.Service.Repository.OrderService;
 using OpencartShop.Service.Repository.ReturnProductService;
+using OpencartShop.Service.UserDataService;
 
 namespace OpencartShop.Controllers
 {
@@ -12,11 +13,14 @@ namespace OpencartShop.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IReturnProductService _returnProductService;
+        private readonly IUserDataService _userDataService;
         public OrderController(IOrderService orderService,
-                               IReturnProductService returnProductService)
+                               IReturnProductService returnProductService,
+                               IUserDataService userDataService)
         {
             _orderService = orderService;
             _returnProductService = returnProductService;
+            _userDataService = userDataService;
         }
 
         #region GET
@@ -27,10 +31,7 @@ namespace OpencartShop.Controllers
         [Authorize]
         [HttpGet("[action]/{id?}")]
         public IQueryable<Order> GetOrderByCustomerId(int? id)
-            => _orderService.GetAllByUserId(id ?? int.Parse(HttpContext.User
-                                                             .Identities
-                                                             .FirstOrDefault()
-                                                             ?.Claims.FirstOrDefault(x=>x.Type == "userId")?.Value ??"0"));
+            => _orderService.GetAllByUserId(id ?? _userDataService.GetUserId());
 
         [Authorize]
         [HttpGet("[action]/{id}")]
