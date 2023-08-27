@@ -15,6 +15,7 @@ using OpencartShop.Controllers;
 using OpencartShop.Service.Repository.OrderService;
 using OpencartShop.Service.Repository.ReturnProductService;
 using OpencartShop.Service.UserDataService;
+using OpencartShop.Service.Repository.FavoriteProductsService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,7 @@ builder.Services.AddTransient<IProductService , ProductService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IReturnProductService, ReturnProductService>();
 builder.Services.AddTransient<IUserDataService, UserDataService>();
+builder.Services.AddTransient<IFavoriteProductService, FavoriteProductsService>();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

@@ -20,7 +20,7 @@ namespace OpencartShop.Domain
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Address> Addresses { get; set; } = null!;
-        public DbSet<FavoriteProduct> LikeProducts { get; set; } = null!;
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; } = null!;
         public DbSet<Cart> Carts { get; set; } = null!;
         public DbSet<CartItem> CartItems { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;

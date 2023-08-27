@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpencartShop.Domain.Entities;
+using OpencartShop.Service.Repository.FavoriteProductsService;
 using OpencartShop.Service.Repository.Products.ProductColors;
 using OpencartShop.Service.Repository.Products.ProductService;
 using OpencartShop.Service.Repository.Products.ProductSizes;
+using OpencartShop.Service.UserDataService;
 using System.Drawing;
 
 namespace OpencartShop.Controllers
@@ -16,13 +18,19 @@ namespace OpencartShop.Controllers
         private readonly IProductColorsService _productColorsService;
         private readonly IProductSizesService _productSizesService;
         private readonly IProductService _productService;
+        private readonly IFavoriteProductService _favoriteProductService;
+        private readonly IUserDataService _userDataService;
         public ProductController(IProductColorsService productColorsService,
                                  IProductSizesService productSizesService,
-                                 IProductService productService)
+                                 IProductService productService,
+                                 IFavoriteProductService favoriteProductService,
+                                 IUserDataService userDataService)
         {
             _productColorsService = productColorsService;
             _productSizesService = productSizesService;
             _productService = productService;
+            _favoriteProductService = favoriteProductService;
+            _userDataService = userDataService;
         }
         #region GET
         [AllowAnonymous]
@@ -57,6 +65,20 @@ namespace OpencartShop.Controllers
         [HttpGet("[action]/{id}")]
         public IQueryable<Product> GetProductsByCategoryId(int id)
             => _productService.GetAllProductsByCategoryId(id);
+
+
+        [Authorize]
+        [HttpGet("[action]/{id}")]
+        public IResult GetCountFavoriteProducts(int id)
+            => Results.Json(new
+            {
+                Id = _favoriteProductService.GetFavoriteCountByProduct(id)
+            });
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public IQueryable<FavoriteProduct> GetMyFavoriteProducts()
+            => _favoriteProductService.GetProductsByUser(_userDataService.GetUserId());
         #endregion
         #region POST
         [Authorize]
@@ -85,6 +107,16 @@ namespace OpencartShop.Controllers
         public IResult BindColor([FromBody] ProductColor productColor)
         {
             _productColorsService.Bind(productColor.ColorsId, productColor.ProductId);
+            return Results.Ok();
+        }
+
+
+        [Authorize]
+        [HttpPost("[action]")]
+        public IResult AddNewFavoriteProducts([FromBody] FavoriteProduct favoriteProduct)
+        {
+            favoriteProduct.CustomerId = _userDataService.GetUserId();
+            _favoriteProductService.AddNewFavoriteProduct(favoriteProduct);
             return Results.Ok();
         }
         #endregion
@@ -138,6 +170,14 @@ namespace OpencartShop.Controllers
         public IResult DeleteBindColor(int id)
         {
             _productColorsService.RemoveBind(id);
+            return Results.Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("[action]/{id}")]
+        public IResult DeleteFavoriteProduct(int id)
+        {
+            _favoriteProductService.DeleteFavoriteProduct(id);
             return Results.Ok();
         }
         #endregion

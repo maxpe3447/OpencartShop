@@ -1,6 +1,7 @@
 ﻿namespace OpencartShop.Service.UserDataService
 {
-    public class IUserDataService
+    public interface IUserDataService
     {
+        int GetUserId();
     }
 }
