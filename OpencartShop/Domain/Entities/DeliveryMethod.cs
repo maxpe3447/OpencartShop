@@ -1,6 +1,6 @@
 ﻿namespace OpencartShop.Domain.Entities
 {
-    public class DeliveryMethods : IEntity
+    public class DeliveryMethod : IEntity
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
