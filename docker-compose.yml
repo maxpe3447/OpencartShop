@@ -1,0 +1,20 @@
+version: '3.9'
+
+networks:
+  default:
+    name: 'shop'
+
+services: 
+   api:
+     build:
+       context: .
+     container_name: 'shop-api'
+     ports:
+       - '8080:8080'
+     environment:
+       ASPNETCORE_URLS: http://+:80
+       TokenKey: 'eiCb8lokwysCF9xlpzqUKTXECqI8wdoF0wLOii58eTVVDrDJQBQXJKvCSG00eiCb8lokwysCF9xlpzqUKTXECqI8wdoF0wLOii58eTVVDrDJQBQXJKvCSG00'
+       # ConnectionStrings__Postgres: 'Server=tfa-pg;Port=5432;Database=tfa;User Id=postgres;Password=postgrespw;'
+       ConnectionStrings: 'Data Source=db.db'
+       # ConnectionStrings__Tracing: 'http://tfa-jeager:14268/api/traces'
+       # Authentication__Base64Key: 'OZAnTVuMoUGKXiYbyup1mIWsCIn2Q/TIxLnHNHo9zBs='
